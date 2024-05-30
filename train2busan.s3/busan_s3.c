@@ -1017,7 +1017,7 @@ int stage_4(int train_length, int probability, int ma_stamina) {
     int old_zombies[50];
 
     // 좀비와 마동석 초기 위치 설정
-    zp = train_length - 4;
+    zp = train_length - 3;
     mp = train_length - 2;
 
     // 열차 길이에 따라 시민 수 설정
