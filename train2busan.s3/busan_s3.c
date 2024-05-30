@@ -106,6 +106,8 @@ void print_train2(int train_length, int cp, int vp, int zp, int mp)
     printf("\n\n");
 }
 
+
+
 int included(int n, int arr[], int v)
 {
     for (int i = 0; i < n; i++) {
@@ -418,10 +420,10 @@ int stage_3(int train_length, int probability, int ma_stamina);
 int stage_4(int train_length, int probability, int ma_stamina);
 
 // 빌런의 이동 함수
-int move_villain(int ocp, int cp, int vp) {
+int move_villain(int vp , int prob) {
     // 빌런은 항상 시민의 바로 뒤를 따라다니므로, 시민의 위치에 따라 빌런의 위치를 업데이트합니다.
     // 빌런의 위치가 열차의 범위를 벗어나지 않도록 처리합니다.
-    if (ocp != cp)
+    if (rand() % 100 < prob)
         vp--;
 
     // 열차 범위를 벗어나는 경우 보정합니다.
@@ -435,7 +437,7 @@ int move_villain(int ocp, int cp, int vp) {
 // 빌런의 행동 함수
 int villain_action(int cp, int vp) {
     // 빌런은 시민이 인접한 경우 발암을 시도하며, 그렇지 않으면 아무 행동도 하지 않습니다.
-    if (abs(cp - vp) == 1 && rand() % 100 < 30) {
+    if (cp + 1 == vp && rand() % 100 < 30) {
         // 빌런의 발암 성공
         printf("Villain attempted to trigger but succeeded! Citizen and Villain positions are swapped.\n");
         return TRUE;
@@ -463,7 +465,7 @@ int main(void) {
     // 확률 입력 받기
     probability = get_value("percentile probability 'p' ", PROB_MIN, PROB_MAX);
 
-    stage_2(train_length, probability, ma_stamina);
+    /*stage_2(train_length, probability, ma_stamina);*/
     /*
     //스테이지 1 실행
     if (stage_1(train_length, probability, ma_stamina) && stage_2(train_length, probability, ma_stamina) &&
@@ -474,7 +476,7 @@ int main(void) {
         printf("You failed to complete all stages!!\n");
     }
     */
-
+    stage_3(train_length,probability, ma_stamina);
     return 0;
 }
 
@@ -717,39 +719,41 @@ int stage_2(int train_length, int probability, int ma_stamina) {
 }
 
 int stage_3(int train_length, int probability, int ma_stamina) {
-    // 좀비, 시민, 마동석, 빌런의 위치 변수 선언
-    int zp, cp, mp, vp;
-    int zt = 0;         // 좀비 이동 플래그: 0: 이동, 1: 멈춤
-
-    int ct_aggro = 1; // 시민 어그로
+    // 시민, 좀비, 마동석의 위치를 저장하는 배열과 시민의 수 변수 선언
+    int citizens[50] = { 0 }; // 최대 열차 길이는 50이므로
+    int num_citizens;
+    int zp, mp,omp , ozp;
+    int zt = 0; // 좀비 이동 플래그: 0은 이동, 1은 멈춤
     int ma_aggro = 1; // 마동석 어그로
-    int old_ct_aggro, old_ma_aggro; // 어그로 변동 출력을 위해 이전 값 저장
-    int old_vl_aggro, vl_aggro = 1; // 빌런
+    int old_ma_aggro; // 어그로 변동 출력을 위해 이전 값 저장
 
-    // 초기 위치 설정
-    mp = train_length - 2;
+    // 열차 길이에 따라 시민 수 설정
+    num_citizens = train_length / 4 + rand() % (train_length / 4 + 1);
+    // 첫 번째 시민은 열차의 오른쪽 끝에 배치
+    citizens[0] = train_length - 2;
+    // 나머지 시민들은 무작위로 배치
+    for (int i = 1; i < num_citizens; ++i) {
+        int position;
+        // 이미 시민이 있는 위치에는 배치하지 않도록 하기 위해 while 루프 사용
+        while (1) {
+            position = rand() % (train_length - 2) + 1;
+            if (citizens[position] == 0) {
+                break; // 이미 시민이 없는 위치에 도달했을 때 루프 종료
+            }
+        }
+        citizens[position] = 1;
+    }
+
+    // 좀비와 마동석 초기 위치 설정
     zp = train_length - 3;
-    cp = train_length - 6;
-    vp = cp + 1;  // 빌런의 초기 위치
+    mp = train_length - 2;
 
     // 열차 상태 출력
-    print_train2(train_length, cp, vp, zp, mp);
+    print_train3(train_length, num_citizens, citizens, zp, mp);
 
     while (1) {
-        // 현재 위치 저장
-        int ocp = cp;
-        int ozp = zp;
-        int omp = mp;
-        int ovp = vp;
-
-        // 이동 페이즈
-        // 시민 이동
-        cp = move_citizen(100 - probability, cp);
-        ct_aggro = update_aggro(old_ct_aggro = ct_aggro, ocp, cp);
-
-        // 빌런 이동
-        vp = move_villain(ocp, cp, vp);
-        vl_aggro = update_aggro(old_vl_aggro = vl_aggro, ovp, vp);
+        omp = mp;
+        ozp = zp;
 
         // 좀비 이동
         if (zt == 0) {
@@ -759,74 +763,55 @@ int stage_3(int train_length, int probability, int ma_stamina) {
         else {
             zt = 0;
         }
+
         // 마동석 이동
         int move = get_dongseok_move(mp, zp);
         mp = move_dongseok(move, mp);
-        ma_aggro = update_aggro(old_ma_aggro = ma_aggro, omp, mp);
+        ma_aggro = update_aggro(old_ma_aggro = ma_aggro, mp - move, mp);
 
         // 열차 상태 출력
-        print_train2(train_length, cp, vp, zp, mp);
-        // 시민 상태 출력
-        print_citizen(ocp, cp, old_ct_aggro, ct_aggro);
-        // 빌런 상태 출력
-        if (vp != -1)
-            print_villain(ovp, vp, old_vl_aggro, vl_aggro);
-        // 좀비 상태 출력
-        print_zombie(zt, ozp, zp);
-        // 마동석 상태 출력
-        print_dongseok(omp, mp, old_ma_aggro, ma_aggro, ma_stamina);
+        print_train3(train_length, num_citizens, citizens, zp, mp);
 
-        // 게임 종료 검사
-        int game_over = check_gameover(cp, zp);
-        if (game_over >= 0)
-            return game_over;
-
-        // 행동 페이즈
-
-        // 빌런 발암
-        if (villain_action(cp, vp)) {
-            // 시민과 빌런 위치 변경
-            int tmp = vp;
-            vp = cp;
-            cp = tmp;
+        // 시민 탈출 검사
+        int escaped = 0;
+        for (int i = 0; i < train_length - 2; ++i) {
+            if (citizens[i] == 1 && i > zp + 1) {
+                escaped = 1; // 좀비 뒤에 있는 시민이 탈출한 경우
+                break;
+            }
         }
-        // 좀비의 행동 처리
-        int z_action = zombie_action2(cp, vp, mp, ct_aggro, vl_aggro, ma_aggro, zp);
 
-        // 좀비의 공격 대상 출력
-        printf("Citizen does nothing.\n");
-        if (z_action == ATK_CITIZEN) {
-            printf("GAME OVER! citizen dead..\n");
+        if (escaped) {
+            printf("\nSUCCESS! All citizens escaped!\n");
+            return TRUE;
+        }
+
+        // 생존한 시민이 없는지 검사
+        int num_survivors = 0;
+        for (int i = 0; i < train_length - 2; ++i) {
+            if (citizens[i] == 1) {
+                ++num_survivors;
+            }
+        }
+
+        if (num_survivors == 0) {
+            printf("\nGAME OVER! All citizens are dead.\n");
             return FALSE;
         }
-        else if (z_action == ATK_VILLAIN) {
-            printf("Villain is dead.. but continue game\n");
-            vp = -1;
-        }
-        else if (z_action == ATK_DONGSEOK) {
-            printf("Zombie attacked madongseok (aggro: %d vs. %d, madongseok stamina: %d -> %d)\n",
-                ct_aggro, ma_aggro, ma_stamina, ma_stamina - 1);
-            if (--ma_stamina < STM_MIN) {
-                printf("GAME OVER! madongseok's stamina(%d) is below than minimum stamina (%d)\n",
-                    ma_stamina, STM_MIN);
-                return FALSE;
+
+        // 시민 이동 및 생존 여부 검사
+        for (int i = 0; i < train_length - 2; ++i) {
+            if (citizens[i] == 1) {
+                citizens[i] = move_citizen(100 - probability, i);
+                if (citizens[i] <= zp + 1) {
+                    printf("A citizen has been attacked by a zombie!\n");
+                    citizens[i] = 0; // 좀비에게 물린 시민 삭제
+                }
             }
-
-        }
-        else { // ATK_NONE
-            printf("Zombie attacked nobody.\n");
         }
 
-        // 마동석의 행동 입력 받기
-        int action = get_dongseok_action(mp, zp);
-
-        // 마동석의 행동 수행
-        int ma_status[2] = { ma_aggro, ma_stamina };
-        int zombie_hold = dongseok_action(probability, mp, action, ma_status);
-
-        // 배열을 이용하여 변경된 값을 복원
-        ma_aggro = ma_status[0];
-        ma_stamina = ma_status[1];
+        // 마동석 상태 출력
+        print_dongseok(mp - move, mp, old_ma_aggro, ma_aggro, ma_stamina);
     }
 }
 
