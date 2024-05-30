@@ -38,7 +38,7 @@
 
 void intro()
 {
-    //인트로
+    //스테이지1 인트로
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -55,7 +55,7 @@ void intro()
 
 void intro2()
 {
-    //인트로
+    //스테이지2 인트로
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -71,7 +71,7 @@ void intro2()
 
 void intro3()
 {
-    //인트로
+    //스테이지3 인트로
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -87,7 +87,7 @@ void intro3()
 
 void intro4()
 {
-    //인트로
+    //스테이지4 인트로
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -102,6 +102,7 @@ void intro4()
 
 }
 
+//열차 상태 출력 함수
 void print_train(int train_length, int cp, int zp, int mp)
 {
     // 열차의 초기 상태 출력
@@ -127,6 +128,7 @@ void print_train(int train_length, int cp, int zp, int mp)
     printf("\n\n");
 }
 
+//스테이지2 열차 상태 출력 함수
 void print_train2(int train_length, int cp, int vp, int zp, int mp)
 {
     // 열차의 초기 상태 출력
@@ -166,6 +168,7 @@ int included(int n, int arr[], int v)
     return FALSE;
 }
 
+//스테이지3 열차 출력 함수
 void print_train3(int train_length, int n, int cp[], int zp, int mp)
 {
     // 열차의 초기 상태 출력
@@ -191,6 +194,7 @@ void print_train3(int train_length, int n, int cp[], int zp, int mp)
     printf("\n\n");
 }
 
+//스테이지4 열차 출력 함수
 void print_train4(int train_length, int n, int cp[], int m, int zs[], int zp, int mp)
 // n : 시민 수, cp : 시민들
 // m : 강화 좀비수, zs : 강화 좀비들
@@ -234,7 +238,7 @@ int get_value(char prompt[], int min_val, int max_val)
     return value;
 }
 
-
+//시민 상태 출력 함수
 void print_citizen(int ocp, int cp, int oaggro, int aggro)
 {
     // 시민 상태 출력
@@ -254,6 +258,7 @@ void print_citizen(int ocp, int cp, int oaggro, int aggro)
     printf(")\n");
 }
 
+//빌런 상태 출력 함수(스테이지2)
 void print_villain(int ovp, int vp, int oaggro, int aggro)
 {
     // 빌런 상태 출력
@@ -274,6 +279,7 @@ void print_villain(int ovp, int vp, int oaggro, int aggro)
     printf(")\n");
 }
 
+//마동석 상태 출력 함수
 void print_dongseok(int omp, int mp, int oaggro, int aggro, int stamina)
 {
     // 동석 상태 출력
@@ -596,6 +602,7 @@ int stage_1(int train_length, int probability, int ma_stamina)
     }
 }
 
+//스테이지2 좀비행동 함수
 int zombie_action2(int cp, int vp, int mp, int ct_aggro, int vl_aggro, int ma_aggro, int zp)
 {
     int action = ATK_NONE; // 공격 대상 초기화
@@ -742,6 +749,7 @@ int stage_2(int train_length, int probability, int ma_stamina) {
     }
 }
 
+//시민들 초기화(자리배치)
 int init_citizens(int train_length, int citizens[50], int aggros[50]) {
 	int num_citizens = train_length / 4 + rand() % (train_length / 2 - train_length / 4);
 
@@ -761,12 +769,14 @@ int init_citizens(int train_length, int citizens[50], int aggros[50]) {
     return num_citizens;
 }
 
+//배열 복사 함수
 void backup_array(int n, int old[], int cur[]) {
 	for (int i = 0; i < n; ++i) {
 		old[i] = cur[i];
 	}
 }
 
+//시민 이동 함수
 void move_citizens(int prob, int num_citizens, int citizens[50], int ct_aggros[50])
 {
     // 시민은 거꾸로 저장되어 있음
@@ -784,6 +794,7 @@ void move_citizens(int prob, int num_citizens, int citizens[50], int ct_aggros[5
     }
 }
 
+//시민수 계산 함수
 int check_citizens(int num_citizens, int citizens[50], int ct_aggros[50])
 {
     int n = num_citizens;
@@ -795,6 +806,7 @@ int check_citizens(int num_citizens, int citizens[50], int ct_aggros[50])
     return n;
 }
 
+//스테이지3 시민 상태 출력 함수
 void print_citizen3(int no, int ocp, int cp, int oaggro, int aggro) {
     // 시민 상태 출력
     printf("citizen%d : ", no);
@@ -813,6 +825,7 @@ void print_citizen3(int no, int ocp, int cp, int oaggro, int aggro) {
     printf(")\n");
 }
 
+//스테이지3 , 스테이지4 에서 사용하는 시민 함수
 void print_citizens(int num_citizens, int ct_oldpos[50], int citizens[50], int oct_aggros[50], int ct_aggros[50])
 {
     for (int i = 0; i < num_citizens; ++i) {
@@ -820,6 +833,7 @@ void print_citizens(int num_citizens, int ct_oldpos[50], int citizens[50], int o
     }
 }
 
+//스테이지3 게임 종료 확인 함수
 int check_gameover3(int num_citizens, int citizens[50], int ct_aggros[50], int zp)
 {
     int cp = citizens[0];
@@ -843,6 +857,7 @@ int check_gameover3(int num_citizens, int citizens[50], int ct_aggros[50], int z
     return -1;
 }
 
+//스테이지3 함수
 int stage_3(int train_length, int probability, int ma_stamina) {
     // 시민, 좀비, 마동석의 위치를 저장하는 배열과 시민의 수 변수 선언
     int citizens[50] = { 0 }; // 최대 열차 길이는 50이므로
@@ -945,6 +960,7 @@ int stage_3(int train_length, int probability, int ma_stamina) {
     }
 }
 
+//스테이지4 좀비 출력 함수
 void print_zombie4(int i, int ozp, int zp)
 {
     // 좀비 상태 출력
@@ -956,12 +972,14 @@ void print_zombie4(int i, int ozp, int zp)
 
 }
 
+//스테이지4 강화 좀비 함수
 void print_zombies(int num_zombies, int old_zombies[50], int zombies[50])
 {
     for(int i = 0; i < num_zombies; i++)
         print_zombie4(i, old_zombies[i], zombies[i]);
 }
 
+//스테이지4 강화 좀비 행동 함수
 void move_zombies(int prob, int num_zombies, int zombies[50])
 {
     for (int i = num_zombies - 1; i >= 0; i--) {
@@ -972,6 +990,7 @@ void move_zombies(int prob, int num_zombies, int zombies[50])
     }
 }
 
+//스테이지4 종료 확인 함수
 int check_gameover4(int num_citizens, int citizens[50], int ct_aggros[50], int num_zombies, int zombies[50], int zp)
 {
     // 항상 첫번째 좀비 (강화 좀비가 있는 경우, 강화좀비의 마지막 인덱스)는
@@ -1003,6 +1022,7 @@ int check_gameover4(int num_citizens, int citizens[50], int ct_aggros[50], int n
     return -1;
 }
 
+//스테이지4 함수
 int stage_4(int train_length, int probability, int ma_stamina) {
     // 시민, 좀비, 마동석의 위치를 저장하는 배열과 시민의 수 변수 선언
     int citizens[50] = { 0 }; // 최대 열차 길이는 50이므로
