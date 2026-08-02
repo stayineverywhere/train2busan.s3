@@ -1,8 +1,8 @@
 /*
- * ÇÁ·Î±×·¥: ºÎ»êÇó(3)
- * ±¸Çö ³»¿ë: 2-1ºÎÅÍ 2-4±îÁö ¸ğµÎ ¿Ï·á
- * ÇĞ¹ø: 20232532
- * ÀÌ¸§: À±ÁÖ¿µ
+ * í”„ë¡œê·¸ë¨: ë¶€ì‚°í—¹(3)
+ * êµ¬í˜„ ë‚´ìš©: 2-1ë¶€í„° 2-4ê¹Œì§€ ëª¨ë‘ ì™„ë£Œ
+ * í•™ë²ˆ: ******32
+ * ì´ë¦„: ìœ¤ì£¼ì˜
  */
 
 #include <stdio.h>
@@ -11,34 +11,34 @@
 #include <Windows.h>
 #include <stdbool.h>
 
- // 2-2 ÆÄ¶ó¹ÌÅÍ ¼±¾ğ
-#define LEN_MIN 15 // ±âÂ÷ ±æÀÌ
+ // 2-2 íŒŒë¼ë¯¸í„° ì„ ì–¸
+#define LEN_MIN 15 // ê¸°ì°¨ ê¸¸ì´
 #define LEN_MAX 50  
-#define STM_MIN 0  // ¸¶µ¿¼® Ã¼·Â
+#define STM_MIN 0  // ë§ˆë™ì„ ì²´ë ¥
 #define STM_MAX 5
-#define PROB_MIN 10 // È®·ü
+#define PROB_MIN 10 // í™•ë¥ 
 #define PROB_MAX 90 
-#define AGGRO_MIN 0 //¾î±×·Î ¹üÀ§
+#define AGGRO_MIN 0 //ì–´ê·¸ë¡œ ë²”ìœ„
 #define AGGRO_MAX 5
 
-//¸¶µ¿¼® ÀÌµ¿ ¹æÇâ
+//ë§ˆë™ì„ ì´ë™ ë°©í–¥
 #define MOVE_LEFT 1
 #define MOVE_STAY 0
 
-//Á»ºñÀÇ °ø°İ ´ë»ó
+//ì¢€ë¹„ì˜ ê³µê²© ëŒ€ìƒ
 #define ATK_NONE 0
 #define ATK_CITIZEN 1
 #define ATK_DONGSEOK 2
 #define ATK_VILLAIN 3
 
-//¸¶µ¿¼® Çàµ¿
+//ë§ˆë™ì„ í–‰ë™
 #define ACTION_REST 0
 #define ACTION_PROVOKE 1
 #define ACTION_PULL 2
 
 void intro()
 {
-    //½ºÅ×ÀÌÁö1 ÀÎÆ®·Î
+    //ìŠ¤í…Œì´ì§€1 ì¸íŠ¸ë¡œ
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -55,7 +55,7 @@ void intro()
 
 void intro2()
 {
-    //½ºÅ×ÀÌÁö2 ÀÎÆ®·Î
+    //ìŠ¤í…Œì´ì§€2 ì¸íŠ¸ë¡œ
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -71,7 +71,7 @@ void intro2()
 
 void intro3()
 {
-    //½ºÅ×ÀÌÁö3 ÀÎÆ®·Î
+    //ìŠ¤í…Œì´ì§€3 ì¸íŠ¸ë¡œ
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -87,7 +87,7 @@ void intro3()
 
 void intro4()
 {
-    //½ºÅ×ÀÌÁö4 ÀÎÆ®·Î
+    //ìŠ¤í…Œì´ì§€4 ì¸íŠ¸ë¡œ
     printf("  *     *          **       *                **      *    * \n");
     printf("  *******        **  **     *****         ********   *    * \n");
     printf("  *     *      **     ***   *               *****    ****** \n");
@@ -102,10 +102,10 @@ void intro4()
 
 }
 
-//¿­Â÷ »óÅÂ Ãâ·Â ÇÔ¼ö
+//ì—´ì°¨ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
 void print_train(int train_length, int cp, int zp, int mp)
 {
-    // ¿­Â÷ÀÇ ÃÊ±â »óÅÂ Ãâ·Â
+    // ì—´ì°¨ì˜ ì´ˆê¸° ìƒíƒœ ì¶œë ¥
     printf("\n");
     for (int i = 0; i < train_length; i++) {
         printf("#");
@@ -128,10 +128,10 @@ void print_train(int train_length, int cp, int zp, int mp)
     printf("\n\n");
 }
 
-//½ºÅ×ÀÌÁö2 ¿­Â÷ »óÅÂ Ãâ·Â ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€2 ì—´ì°¨ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
 void print_train2(int train_length, int cp, int vp, int zp, int mp)
 {
-    // ¿­Â÷ÀÇ ÃÊ±â »óÅÂ Ãâ·Â
+    // ì—´ì°¨ì˜ ì´ˆê¸° ìƒíƒœ ì¶œë ¥
     printf("\n");
     for (int i = 0; i < train_length; i++) {
         printf("#");
@@ -161,17 +161,17 @@ void print_train2(int train_length, int cp, int vp, int zp, int mp)
 int included(int n, int arr[], int v)
 {
     for (int i = 0; i < n; i++) {
-        // arr[i] > 0 : normal, -4 : dead, -9: Á»ºñ·Î º¯ÇÑ ½Ã¹Î
+        // arr[i] > 0 : normal, -4 : dead, -9: ì¢€ë¹„ë¡œ ë³€í•œ ì‹œë¯¼
         if (arr[i] > 0 && arr[i] == v) 
             return TRUE;
     }
     return FALSE;
 }
 
-//½ºÅ×ÀÌÁö3 ¿­Â÷ Ãâ·Â ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€3 ì—´ì°¨ ì¶œë ¥ í•¨ìˆ˜
 void print_train3(int train_length, int n, int cp[], int zp, int mp)
 {
-    // ¿­Â÷ÀÇ ÃÊ±â »óÅÂ Ãâ·Â
+    // ì—´ì°¨ì˜ ì´ˆê¸° ìƒíƒœ ì¶œë ¥
     printf("\n");
     for (int i = 0; i < train_length; i++) {
         printf("#");
@@ -194,13 +194,13 @@ void print_train3(int train_length, int n, int cp[], int zp, int mp)
     printf("\n\n");
 }
 
-//½ºÅ×ÀÌÁö4 ¿­Â÷ Ãâ·Â ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 ì—´ì°¨ ì¶œë ¥ í•¨ìˆ˜
 void print_train4(int train_length, int n, int cp[], int m, int zs[], int zp, int mp)
-// n : ½Ã¹Î ¼ö, cp : ½Ã¹Îµé
-// m : °­È­ Á»ºñ¼ö, zs : °­È­ Á»ºñµé
-// zp, mp : ÀÏ¹İ Á»ºñ, ¸¶µ¿¼®
+// n : ì‹œë¯¼ ìˆ˜, cp : ì‹œë¯¼ë“¤
+// m : ê°•í™” ì¢€ë¹„ìˆ˜, zs : ê°•í™” ì¢€ë¹„ë“¤
+// zp, mp : ì¼ë°˜ ì¢€ë¹„, ë§ˆë™ì„
 {
-    // ¿­Â÷ÀÇ ÃÊ±â »óÅÂ Ãâ·Â
+    // ì—´ì°¨ì˜ ì´ˆê¸° ìƒíƒœ ì¶œë ¥
     printf("\n");
     for (int i = 0; i < train_length; i++) {
         printf("#");
@@ -224,8 +224,8 @@ void print_train4(int train_length, int n, int cp[], int m, int zs[], int zp, in
 }
 
 
-// 2-2: À¯È¿ÇÑ °ªÀÌ ÀÔ·ÂµÉ ¶§±îÁö ´Ù½Ã ÀÔ·Â ¹ŞÀ½
-// µ¿ÀÏÇÑ Çü½ÄÀ¸·Î ÀÔ·Â¹Ş±â À§ÇÏ¿©, È­¸é Ç¥½Ã ¹®ÀÚ¿­°ú ÃÖ¼Ò, ÃÖ´ë °ªÀ» Àü´Ş ¹ŞÀ½
+// 2-2: ìœ íš¨í•œ ê°’ì´ ì…ë ¥ë  ë•Œê¹Œì§€ ë‹¤ì‹œ ì…ë ¥ ë°›ìŒ
+// ë™ì¼í•œ í˜•ì‹ìœ¼ë¡œ ì…ë ¥ë°›ê¸° ìœ„í•˜ì—¬, í™”ë©´ í‘œì‹œ ë¬¸ìì—´ê³¼ ìµœì†Œ, ìµœëŒ€ ê°’ì„ ì „ë‹¬ ë°›ìŒ
 int get_value(char prompt[], int min_val, int max_val)
 {
     int value;
@@ -238,10 +238,10 @@ int get_value(char prompt[], int min_val, int max_val)
     return value;
 }
 
-//½Ã¹Î »óÅÂ Ãâ·Â ÇÔ¼ö
+//ì‹œë¯¼ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
 void print_citizen(int ocp, int cp, int oaggro, int aggro)
 {
-    // ½Ã¹Î »óÅÂ Ãâ·Â
+    // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
     printf("citizen : ");
     if (ocp == cp) {
         printf("stay %d ", cp);
@@ -258,11 +258,11 @@ void print_citizen(int ocp, int cp, int oaggro, int aggro)
     printf(")\n");
 }
 
-//ºô·± »óÅÂ Ãâ·Â ÇÔ¼ö(½ºÅ×ÀÌÁö2)
+//ë¹ŒëŸ° ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜(ìŠ¤í…Œì´ì§€2)
 void print_villain(int ovp, int vp, int oaggro, int aggro)
 {
-    // ºô·± »óÅÂ Ãâ·Â
-    if (vp <= 0) return; // ºô·±ÀÌ <= 0ÀÌ¸é, ¿­Â÷¸¦ ºüÁ® ³ª°¨
+    // ë¹ŒëŸ° ìƒíƒœ ì¶œë ¥
+    if (vp <= 0) return; // ë¹ŒëŸ°ì´ <= 0ì´ë©´, ì—´ì°¨ë¥¼ ë¹ ì ¸ ë‚˜ê°
     printf("villain : ");
     if (ovp == vp) {
         printf("stay %d ", vp);
@@ -279,10 +279,10 @@ void print_villain(int ovp, int vp, int oaggro, int aggro)
     printf(")\n");
 }
 
-//¸¶µ¿¼® »óÅÂ Ãâ·Â ÇÔ¼ö
+//ë§ˆë™ì„ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
 void print_dongseok(int omp, int mp, int oaggro, int aggro, int stamina)
 {
-    // µ¿¼® »óÅÂ Ãâ·Â
+    // ë™ì„ ìƒíƒœ ì¶œë ¥
     printf("madongseok : ");
     if (omp == mp) {
         printf("stay %d", mp);
@@ -301,7 +301,7 @@ void print_dongseok(int omp, int mp, int oaggro, int aggro, int stamina)
 
 void print_zombie(int zt, int ozp, int zp)
 {
-    // Á»ºñ »óÅÂ Ãâ·Â
+    // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
     printf("zombie  : ");
     if (zt == 1) {
         if (ozp == zp)
@@ -330,7 +330,7 @@ int check_gameover(int cp, int zp)
     return -1;
 }
 
-// 2-3: ½Ã¹Î ÀÌµ¿
+// 2-3: ì‹œë¯¼ ì´ë™
 int move_citizen(int prob, int cp)
 {
     if (rand() % 100 < prob) {
@@ -339,22 +339,22 @@ int move_citizen(int prob, int cp)
     return cp;
 }
 
-// 2-3: ÀÌµ¿¿¡ µû¸¥ ¾î±×·Î ¾÷µ¥ÀÌÆ®
+// 2-3: ì´ë™ì— ë”°ë¥¸ ì–´ê·¸ë¡œ ì—…ë°ì´íŠ¸
 int update_aggro(int aggro, int old, int current)
 {
-    // À§Ä¡°¡ º¯µ¿µÇ´Â °æ¿ì ¾î±×·Î Áõ°¡
+    // ìœ„ì¹˜ê°€ ë³€ë™ë˜ëŠ” ê²½ìš° ì–´ê·¸ë¡œ ì¦ê°€
     if (old != current)
         aggro++;
-    else // Á¦ÀÚ¸®¿¡ ÀÖ´Â °æ¿ì ¾î±×·Î °¨¼Ò
+    else // ì œìë¦¬ì— ìˆëŠ” ê²½ìš° ì–´ê·¸ë¡œ ê°ì†Œ
         aggro--;
-    // ¾î±×·Î ÃÖ¼Ò, ÃÖ´ë °Ë»ç
+    // ì–´ê·¸ë¡œ ìµœì†Œ, ìµœëŒ€ ê²€ì‚¬
     if (aggro > AGGRO_MAX)
         aggro = AGGRO_MAX;
     if (aggro < AGGRO_MIN)
         aggro = AGGRO_MIN;
     return aggro;
 }
-// 2-3: Á»ºñ ÀÌµ¿
+// 2-3: ì¢€ë¹„ ì´ë™
 int move_zombie(int prob, int zp)
 {
     if (rand() % 100 < prob)
@@ -362,7 +362,7 @@ int move_zombie(int prob, int zp)
     return zp;
 }
 
-// 2-3: ¸¶µ¿¼® ÀÌµ¿
+// 2-3: ë§ˆë™ì„ ì´ë™
 int move_dongseok(int move, int mp)
 {
     if (move == MOVE_LEFT)
@@ -370,11 +370,11 @@ int move_dongseok(int move, int mp)
     return mp;
 }
 
-// 2-2: ÀÔ·Â °ªÃ³¸®
+// 2-2: ì…ë ¥ ê°’ì²˜ë¦¬
 int get_dongseok_move(int mp, int zp)
 {
     int move;
-    //printf("¸¶µ¿¼® ÀÌµ¿ (0. ´ë±â, 1. ¿ŞÂÊÀ¸·Î ÀÌµ¿) >> ");
+    //printf("ë§ˆë™ì„ ì´ë™ (0. ëŒ€ê¸°, 1. ì™¼ìª½ìœ¼ë¡œ ì´ë™) >> ");
     while (1) {
         if (mp != zp + 1)
             printf("madongseok move (0:stay, 1:left) >> ");
@@ -387,38 +387,38 @@ int get_dongseok_move(int mp, int zp)
     return move;
 }
 
-// 2-4: Á»ºñ Çàµ¿ ÇÔ¼ö
+// 2-4: ì¢€ë¹„ í–‰ë™ í•¨ìˆ˜
 int zombie_action(int cp, int mp, int ct_aggro, int ma_aggro, int zp)
 {
-    int action = ATK_NONE; // °ø°İ ´ë»ó ÃÊ±âÈ­
+    int action = ATK_NONE; // ê³µê²© ëŒ€ìƒ ì´ˆê¸°í™”
 
-    // ÀÎ°£°ú ÀÎÁ¢ÇÑ °æ¿ì
+    // ì¸ê°„ê³¼ ì¸ì ‘í•œ ê²½ìš°
     if (zp == cp - 1 && zp == mp - 1) {
-        // ¾î±×·Î°¡ ³ôÀº ÂÊÀ» °ø°İ
+        // ì–´ê·¸ë¡œê°€ ë†’ì€ ìª½ì„ ê³µê²©
         if (ct_aggro > ma_aggro)
-            action = ATK_CITIZEN; // ½Ã¹Î °ø°İ
+            action = ATK_CITIZEN; // ì‹œë¯¼ ê³µê²©
         else
-            action = ATK_DONGSEOK; // ¸¶µ¿¼® °ø°İ
+            action = ATK_DONGSEOK; // ë§ˆë™ì„ ê³µê²©
     }
     else if (zp == cp - 1) {
-        action = ATK_CITIZEN; // ½Ã¹Î °ø°İ
+        action = ATK_CITIZEN; // ì‹œë¯¼ ê³µê²©
     }
     else if (zp == mp - 1) {
-        action = ATK_DONGSEOK; // ¸¶µ¿¼® °ø°İ
+        action = ATK_DONGSEOK; // ë§ˆë™ì„ ê³µê²©
     }
     return action;
 }
 
-// 2-2: ÀÔ·Â °ªÃ³¸®
+// 2-2: ì…ë ¥ ê°’ì²˜ë¦¬
 int get_dongseok_action(int mp, int zp)
 {
     int action;
     while (1) {
         if (mp == zp + 1)
-            //printf("\n¸¶µ¿¼® Çàµ¿ ¼±ÅÃ (0. ÈŞ½Ä, 1. µµ¹ß, 2. ºÙµé±â) >> ");
+            //printf("\në§ˆë™ì„ í–‰ë™ ì„ íƒ (0. íœ´ì‹, 1. ë„ë°œ, 2. ë¶™ë“¤ê¸°) >> ");
             printf("madongseok action (0:rest, 1:provoke, 2:pull) >> ");
         else
-            //printf("\n¸¶µ¿¼® Çàµ¿ ¼±ÅÃ (0. ÈŞ½Ä, 1. µµ¹ß) >> ");
+            //printf("\në§ˆë™ì„ í–‰ë™ ì„ íƒ (0. íœ´ì‹, 1. ë„ë°œ) >> ");
             printf("madongseok action (0:rest, 1:provoke) >> ");
         scanf_s("%d", &action);
         if (mp == zp + 1 && action >= 0 && action <= 2) break;
@@ -427,9 +427,9 @@ int get_dongseok_action(int mp, int zp)
     return action;
 }
 
-// 2-4: ¸¶µ¿¼® Çàµ¿ ÇÔ¼ö
-// ma_stamina¿Í ma_aggro¸¦ ¾÷µ¥ÀÌÆ®ÇÏ±â À§ÇÏ¿©, ma_status[2] ¹è¿­À» ÀÌ¿ëÇÏ¿© ¾÷µ¥ÀÌÆ®ÇÔ
-// ÇÔ¼ö È£ÃâÀü¿¡ ma_status¿¡ ma_stamina¿Í ma_aggro¸¦ º¹»çÇÏ°í, ÇÔ¼ö È£Ãâ ÈÄ¿¡ º¹¿øÇÔ
+// 2-4: ë§ˆë™ì„ í–‰ë™ í•¨ìˆ˜
+// ma_staminaì™€ ma_aggroë¥¼ ì—…ë°ì´íŠ¸í•˜ê¸° ìœ„í•˜ì—¬, ma_status[2] ë°°ì—´ì„ ì´ìš©í•˜ì—¬ ì—…ë°ì´íŠ¸í•¨
+// í•¨ìˆ˜ í˜¸ì¶œì „ì— ma_statusì— ma_staminaì™€ ma_aggroë¥¼ ë³µì‚¬í•˜ê³ , í•¨ìˆ˜ í˜¸ì¶œ í›„ì— ë³µì›í•¨
 int dongseok_action(int prob, int mp, int action, int status[2])
 {
     int aggro = status[0];
@@ -459,7 +459,7 @@ int dongseok_action(int prob, int mp, int action, int status[2])
             stamina--;
         if (rand() % 100 < prob) {
             printf("\nmadongseok pulled zombie... Next turn, it can't move.\n");
-            zombie_hold = 1; // ´ÙÀ½ ÅÏ¿¡ Á»ºñ ÀÌµ¿ ºÒ°¡´É Ç¥½Ã
+            zombie_hold = 1; // ë‹¤ìŒ í„´ì— ì¢€ë¹„ ì´ë™ ë¶ˆê°€ëŠ¥ í‘œì‹œ
         }
         else {
             printf("\nmadongseok failed to pull zombie.\n");
@@ -477,15 +477,15 @@ int stage_2(int train_length, int probability, int ma_stamina);
 int stage_3(int train_length, int probability, int ma_stamina);
 int stage_4(int train_length, int probability, int ma_stamina);
 
-// ºô·±ÀÇ ÀÌµ¿ ÇÔ¼ö
+// ë¹ŒëŸ°ì˜ ì´ë™ í•¨ìˆ˜
 int move_villain(int prob, int vp, int cp ) {
-    // ºô·±Àº Ç×»ó ½Ã¹ÎÀÇ ¹Ù·Î µÚ¸¦ µû¶ó´Ù´Ï¹Ç·Î, ½Ã¹ÎÀÇ À§Ä¡¿¡ µû¶ó ºô·±ÀÇ À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
-    // ºô·±ÀÇ À§Ä¡°¡ ¿­Â÷ÀÇ ¹üÀ§¸¦ ¹ş¾î³ªÁö ¾Êµµ·Ï Ã³¸®ÇÕ´Ï´Ù.
-    // ºô·± À§Ä¡°¡ ½Ã¹Î°ú °ãÄ¡Áö ¾Ê¾Æ¾ß ÇÔ.
+    // ë¹ŒëŸ°ì€ í•­ìƒ ì‹œë¯¼ì˜ ë°”ë¡œ ë’¤ë¥¼ ë”°ë¼ë‹¤ë‹ˆë¯€ë¡œ, ì‹œë¯¼ì˜ ìœ„ì¹˜ì— ë”°ë¼ ë¹ŒëŸ°ì˜ ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
+    // ë¹ŒëŸ°ì˜ ìœ„ì¹˜ê°€ ì—´ì°¨ì˜ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ ì²˜ë¦¬í•©ë‹ˆë‹¤.
+    // ë¹ŒëŸ° ìœ„ì¹˜ê°€ ì‹œë¯¼ê³¼ ê²¹ì¹˜ì§€ ì•Šì•„ì•¼ í•¨.
     if (rand() % 100 < prob && vp - 1 != cp) 
         vp--;
 
-    // ¿­Â÷ ¹üÀ§¸¦ ¹ş¾î³ª´Â °æ¿ì º¸Á¤ÇÕ´Ï´Ù.
+    // ì—´ì°¨ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ëŠ” ê²½ìš° ë³´ì •í•©ë‹ˆë‹¤.
     if (vp < 1)
         vp = 1;
 
@@ -493,12 +493,12 @@ int move_villain(int prob, int vp, int cp ) {
 };
 
 
-// ºô·±ÀÇ Çàµ¿ ÇÔ¼ö
+// ë¹ŒëŸ°ì˜ í–‰ë™ í•¨ìˆ˜
 int villain_action(int cp, int vp) {
-    // ºô·±Àº ½Ã¹ÎÀÌ ÀÎÁ¢ÇÑ °æ¿ì ¹ß¾ÏÀ» ½ÃµµÇÏ¸ç, ±×·¸Áö ¾ÊÀ¸¸é ¾Æ¹« Çàµ¿µµ ÇÏÁö ¾Ê½À´Ï´Ù.
+    // ë¹ŒëŸ°ì€ ì‹œë¯¼ì´ ì¸ì ‘í•œ ê²½ìš° ë°œì•”ì„ ì‹œë„í•˜ë©°, ê·¸ë ‡ì§€ ì•Šìœ¼ë©´ ì•„ë¬´ í–‰ë™ë„ í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     if (cp + 1 == vp) {
         if (rand() % 100 < 30) {
-            // ºô·±ÀÇ ¹ß¾Ï ¼º°ø
+            // ë¹ŒëŸ°ì˜ ë°œì•” ì„±ê³µ
             printf("Villain attempted to trigger but succeeded! Citizen and Villain positions are swapped.\n");
             return TRUE;
         }
@@ -509,36 +509,36 @@ int villain_action(int cp, int vp) {
     return FALSE;
 }
 
-//½ºÅ×ÀÌÁö 1 ½ÇÇà ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€ 1 ì‹¤í–‰ í•¨ìˆ˜
 int stage_1(int train_length, int probability, int ma_stamina)
 {
-    // ½Ã¹Î, Á»ºñ, ¿­Â÷ÀÇ À§Ä¡ º¯¼ö ¼±¾ğ
+    // ì‹œë¯¼, ì¢€ë¹„, ì—´ì°¨ì˜ ìœ„ì¹˜ ë³€ìˆ˜ ì„ ì–¸
     int mp, zp, cp, omp, ozp, ocp;
-    int zt = 0;         // Á»ºñ ÀÌµ¿ ÇÃ·¡±×: 0: ÀÌµ¿, 1: ¸ØÃã
-    int ma_aggro = 1; // ¸¶µ¿¼® ¾î±×·Î
-    int ct_aggro = 1; // ½Ã¹Î ¾î±×·Î
-    int old_ma_aggro, old_ct_aggro; // ¾î±×·Î º¯µ¿ Ãâ·ÂÀ» À§ÇØ ÀÌÀü °ª ÀúÀå
+    int zt = 0;         // ì¢€ë¹„ ì´ë™ í”Œë˜ê·¸: 0: ì´ë™, 1: ë©ˆì¶¤
+    int ma_aggro = 1; // ë§ˆë™ì„ ì–´ê·¸ë¡œ
+    int ct_aggro = 1; // ì‹œë¯¼ ì–´ê·¸ë¡œ
+    int old_ma_aggro, old_ct_aggro; // ì–´ê·¸ë¡œ ë³€ë™ ì¶œë ¥ì„ ìœ„í•´ ì´ì „ ê°’ ì €ì¥
 
-    // ¸¶µ¿¼®, Á»ºñ, ½Ã¹ÎÀÇ À§Ä¡ ÃÊ±âÈ­
+    // ë§ˆë™ì„, ì¢€ë¹„, ì‹œë¯¼ì˜ ìœ„ì¹˜ ì´ˆê¸°í™”
     mp = train_length - 2;
     zp = train_length - 3;
     cp = train_length - 6;
 
-    // ¿­Â÷ »óÅÂ Ãâ·Â
+    // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
     print_train(train_length, cp, zp, mp);
 
     while (1) {
-        // ÇöÀç À§Ä¡ º¸°ü
+        // í˜„ì¬ ìœ„ì¹˜ ë³´ê´€
         ocp = cp;
         ozp = zp;
         omp = mp;
 
-        // <ÀÌµ¿> ÆäÀÌÁî
-        // ½Ã¹Î ÀÌµ¿
+        // <ì´ë™> í˜ì´ì¦ˆ
+        // ì‹œë¯¼ ì´ë™
         cp = move_citizen(100 - probability, cp);
         ct_aggro = update_aggro(old_ct_aggro = ct_aggro, ocp, cp);
 
-        // Á»ºñ ÀÌµ¿
+        // ì¢€ë¹„ ì´ë™
         if (zt == 0) {
             zp = move_zombie(probability, zp);
             zt = 1;
@@ -547,29 +547,29 @@ int stage_1(int train_length, int probability, int ma_stamina)
             zt = 0;
         }
 
-        // ¿­Â÷ »óÅÂ Ãâ·Â
+        // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
         print_train(train_length, cp, zp, mp);
-        // ½Ã¹Î »óÅÂ Ãâ·Â
+        // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
         print_citizen(ocp, cp, old_ct_aggro, ct_aggro);
-        // Á»ºñ »óÅÂ Ãâ·Â
+        // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
         print_zombie(zt, ozp, zp);
-        // °ÔÀÓ Á¾·á °Ë»ç
+        // ê²Œì„ ì¢…ë£Œ ê²€ì‚¬
         int game_over = check_gameover(cp, zp);
         if (game_over >= 0)
             return game_over;
 
-        // ¸¶µ¿¼® ÀÌµ¿ ÀÔ·Â ¹Ş±â
+        // ë§ˆë™ì„ ì´ë™ ì…ë ¥ ë°›ê¸°
         int move = get_dongseok_move(mp, zp);
         mp = move_dongseok(move, mp);
         ma_aggro = update_aggro(old_ma_aggro = ma_aggro, omp, mp);
         print_train(train_length, cp, zp, mp);
         print_dongseok(omp, mp, old_ma_aggro, ma_aggro, ma_stamina);
 
-        // <Çàµ¿> ÆäÀÌÁî
-        // Á»ºñÀÇ Çàµ¿ Ã³¸®
+        // <í–‰ë™> í˜ì´ì¦ˆ
+        // ì¢€ë¹„ì˜ í–‰ë™ ì²˜ë¦¬
         int z_action = zombie_action(cp, mp, ct_aggro, ma_aggro, zp);
 
-        // Á»ºñÀÇ °ø°İ ´ë»ó Ãâ·Â
+        // ì¢€ë¹„ì˜ ê³µê²© ëŒ€ìƒ ì¶œë ¥
         printf("Citizen does nothing.\n");
         if (z_action == ATK_CITIZEN) {
             printf("GAME OVER! citizen dead..\n");
@@ -589,88 +589,88 @@ int stage_1(int train_length, int probability, int ma_stamina)
             printf("Zombie attacked nobody.\n");
         }
 
-        // ¸¶µ¿¼® Çàµ¿ ÀÔ·Â ¹Ş±â
+        // ë§ˆë™ì„ í–‰ë™ ì…ë ¥ ë°›ê¸°
         int action = get_dongseok_action(mp, zp);
 
-        // ¸¶µ¿¼® Çàµ¿ ¼öÇà
+        // ë§ˆë™ì„ í–‰ë™ ìˆ˜í–‰
         int ma_status[2] = { ma_aggro, ma_stamina };
         zt = dongseok_action(100-probability, mp, action, ma_status);
 
-        // ¹è¿­À» ÀÌ¿ëÇÏ¿© º¯°æµÈ °ªÀ» º¹¿ø
+        // ë°°ì—´ì„ ì´ìš©í•˜ì—¬ ë³€ê²½ëœ ê°’ì„ ë³µì›
         ma_aggro = ma_status[0];
         ma_stamina = ma_status[1];
     }
 }
 
-//½ºÅ×ÀÌÁö2 Á»ºñÇàµ¿ ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€2 ì¢€ë¹„í–‰ë™ í•¨ìˆ˜
 int zombie_action2(int cp, int vp, int mp, int ct_aggro, int vl_aggro, int ma_aggro, int zp)
 {
-    int action = ATK_NONE; // °ø°İ ´ë»ó ÃÊ±âÈ­
+    int action = ATK_NONE; // ê³µê²© ëŒ€ìƒ ì´ˆê¸°í™”
 
-    // ÀÎ°£°ú ÀÎÁ¢ÇÑ °æ¿ì
+    // ì¸ê°„ê³¼ ì¸ì ‘í•œ ê²½ìš°
     if (zp == cp - 1 && zp == mp - 1) {
-        // ¾î±×·Î°¡ ³ôÀº ÂÊÀ» °ø°İ
+        // ì–´ê·¸ë¡œê°€ ë†’ì€ ìª½ì„ ê³µê²©
         if (ct_aggro > ma_aggro)
-            action = ATK_CITIZEN; // ½Ã¹Î °ø°İ
+            action = ATK_CITIZEN; // ì‹œë¯¼ ê³µê²©
         else
-            action = ATK_DONGSEOK; // ¸¶µ¿¼® °ø°İ
+            action = ATK_DONGSEOK; // ë§ˆë™ì„ ê³µê²©
     }
     else if (zp == vp - 1 && zp == mp - 1) {
-        // ¾î±×·Î°¡ ³ôÀº ÂÊÀ» °ø°İ
+        // ì–´ê·¸ë¡œê°€ ë†’ì€ ìª½ì„ ê³µê²©
         if (vl_aggro > ma_aggro)
-            action = ATK_VILLAIN; // ½Ã¹Î °ø°İ
+            action = ATK_VILLAIN; // ì‹œë¯¼ ê³µê²©
         else
-            action = ATK_DONGSEOK; // ¸¶µ¿¼® °ø°İ
+            action = ATK_DONGSEOK; // ë§ˆë™ì„ ê³µê²©
     }
     else if (zp == cp - 1) {
-        action = ATK_CITIZEN; // ½Ã¹Î °ø°İ
+        action = ATK_CITIZEN; // ì‹œë¯¼ ê³µê²©
     }
     else if (zp == vp - 1) {
-        action = ATK_VILLAIN; // ºô·± °ø°İ
+        action = ATK_VILLAIN; // ë¹ŒëŸ° ê³µê²©
     }
     else if (zp == mp - 1) {
-        action = ATK_DONGSEOK; // ¸¶µ¿¼® °ø°İ
+        action = ATK_DONGSEOK; // ë§ˆë™ì„ ê³µê²©
     }
     return action;
 }
 
-// ½ºÅ×ÀÌÁö 2 ½ÇÇà ÇÔ¼ö
+// ìŠ¤í…Œì´ì§€ 2 ì‹¤í–‰ í•¨ìˆ˜
 int stage_2(int train_length, int probability, int ma_stamina) {
-    // Á»ºñ, ½Ã¹Î, ¸¶µ¿¼®, ºô·±ÀÇ À§Ä¡ º¯¼ö ¼±¾ğ
+    // ì¢€ë¹„, ì‹œë¯¼, ë§ˆë™ì„, ë¹ŒëŸ°ì˜ ìœ„ì¹˜ ë³€ìˆ˜ ì„ ì–¸
     int zp, cp, mp, vp;
-    int zt = 0;         // Á»ºñ ÀÌµ¿ ÇÃ·¡±×: 0: ÀÌµ¿, 1: ¸ØÃã
-    int ct_aggro = 1; // ½Ã¹Î ¾î±×·Î
-    int ma_aggro = 1; // ¸¶µ¿¼® ¾î±×·Î
-    int old_ct_aggro, old_ma_aggro; // ¾î±×·Î º¯µ¿ Ãâ·ÂÀ» À§ÇØ ÀÌÀü °ª ÀúÀå
-    int old_vl_aggro, vl_aggro = 1; // ºô·±
+    int zt = 0;         // ì¢€ë¹„ ì´ë™ í”Œë˜ê·¸: 0: ì´ë™, 1: ë©ˆì¶¤
+    int ct_aggro = 1; // ì‹œë¯¼ ì–´ê·¸ë¡œ
+    int ma_aggro = 1; // ë§ˆë™ì„ ì–´ê·¸ë¡œ
+    int old_ct_aggro, old_ma_aggro; // ì–´ê·¸ë¡œ ë³€ë™ ì¶œë ¥ì„ ìœ„í•´ ì´ì „ ê°’ ì €ì¥
+    int old_vl_aggro, vl_aggro = 1; // ë¹ŒëŸ°
 
-    // ÃÊ±â À§Ä¡ ¼³Á¤
+    // ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
     mp = train_length - 2;
     zp = train_length - 3;
     cp = train_length - 6;
-    vp = cp + 1;  // ºô·±ÀÇ ÃÊ±â À§Ä¡
+    vp = cp + 1;  // ë¹ŒëŸ°ì˜ ì´ˆê¸° ìœ„ì¹˜
 
     intro2();
-    // ¿­Â÷ »óÅÂ Ãâ·Â
+    // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
     print_train2(train_length, cp, vp, zp, mp);
 
     while (1) {
-        // ÇöÀç À§Ä¡ ÀúÀå
+        // í˜„ì¬ ìœ„ì¹˜ ì €ì¥
         int ocp = cp;
         int ozp = zp;
         int omp = mp;
         int ovp = vp;
 
-        // ÀÌµ¿ ÆäÀÌÁî
-        // ½Ã¹Î ÀÌµ¿
+        // ì´ë™ í˜ì´ì¦ˆ
+        // ì‹œë¯¼ ì´ë™
         cp = move_citizen(100 - probability, cp);
         ct_aggro = update_aggro(old_ct_aggro = ct_aggro, ocp, cp);
 
-        // ºô·± ÀÌµ¿
+        // ë¹ŒëŸ° ì´ë™
         vp = move_villain(100-probability, vp, cp);
         vl_aggro = update_aggro(old_vl_aggro = vl_aggro, ovp, vp);
 
-        // Á»ºñ ÀÌµ¿
+        // ì¢€ë¹„ ì´ë™
         if (zt == 0) {
             zp = move_zombie(probability, zp);
             zt = 1;
@@ -679,40 +679,40 @@ int stage_2(int train_length, int probability, int ma_stamina) {
             zt = 0;
         }
 
-        // ¿­Â÷ »óÅÂ Ãâ·Â
+        // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
         print_train2(train_length, cp, vp, zp, mp);
-        // ½Ã¹Î »óÅÂ Ãâ·Â
+        // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
         print_citizen(ocp, cp, old_ct_aggro, ct_aggro);
-        // ºô·± »óÅÂ Ãâ·Â
+        // ë¹ŒëŸ° ìƒíƒœ ì¶œë ¥
         if (vp > 0)
             print_villain(ovp, vp, old_vl_aggro, vl_aggro);
-        // Á»ºñ »óÅÂ Ãâ·Â
+        // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
         print_zombie(zt, ozp, zp);
 
-        // °ÔÀÓ Á¾·á °Ë»ç
+        // ê²Œì„ ì¢…ë£Œ ê²€ì‚¬
         int game_over = check_gameover(cp, zp);
         if (game_over >= 0)
             return game_over;
 
-        // ¸¶µ¿¼® ÀÌµ¿
+        // ë§ˆë™ì„ ì´ë™
         int move = get_dongseok_move(mp, zp);
         mp = move_dongseok(move, mp);
         ma_aggro = update_aggro(old_ma_aggro = ma_aggro, omp, mp);
         print_train2(train_length, cp, vp, zp, mp);
         print_dongseok(omp, mp, old_ma_aggro, ma_aggro, ma_stamina);
 
-        // Çàµ¿ ÆäÀÌÁî
-        // ºô·± ¹ß¾Ï
+        // í–‰ë™ í˜ì´ì¦ˆ
+        // ë¹ŒëŸ° ë°œì•”
         if (villain_action(cp, vp)) {
-            // ½Ã¹Î°ú ºô·± À§Ä¡ º¯°æ
+            // ì‹œë¯¼ê³¼ ë¹ŒëŸ° ìœ„ì¹˜ ë³€ê²½
             int tmp = vp;
             vp = cp;
             cp = tmp;
         }
-        // Á»ºñÀÇ Çàµ¿ Ã³¸®
+        // ì¢€ë¹„ì˜ í–‰ë™ ì²˜ë¦¬
         int z_action = zombie_action2(cp, vp, mp, ct_aggro, vl_aggro, ma_aggro, zp);
 
-        // Á»ºñÀÇ °ø°İ ´ë»ó Ãâ·Â
+        // ì¢€ë¹„ì˜ ê³µê²© ëŒ€ìƒ ì¶œë ¥
         printf("Citizen does nothing.\n");
         if (z_action == ATK_CITIZEN) {
             printf("GAME OVER! citizen dead..\n");
@@ -736,31 +736,31 @@ int stage_2(int train_length, int probability, int ma_stamina) {
             printf("Zombie attacked nobody.\n");
         }
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ÀÔ·Â ¹Ş±â
+        // ë§ˆë™ì„ì˜ í–‰ë™ ì…ë ¥ ë°›ê¸°
         int action = get_dongseok_action(mp, zp);
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ¼öÇà
+        // ë§ˆë™ì„ì˜ í–‰ë™ ìˆ˜í–‰
         int ma_status[2] = { ma_aggro, ma_stamina };
         int zombie_hold = dongseok_action(100-probability, mp, action, ma_status);
 
-        // ¹è¿­À» ÀÌ¿ëÇÏ¿© º¯°æµÈ °ªÀ» º¹¿ø
+        // ë°°ì—´ì„ ì´ìš©í•˜ì—¬ ë³€ê²½ëœ ê°’ì„ ë³µì›
         ma_aggro = ma_status[0];
         ma_stamina = ma_status[1];
     }
 }
 
-//½Ã¹Îµé ÃÊ±âÈ­(ÀÚ¸®¹èÄ¡)
+//ì‹œë¯¼ë“¤ ì´ˆê¸°í™”(ìë¦¬ë°°ì¹˜)
 int init_citizens(int train_length, int citizens[50], int aggros[50]) {
 	int num_citizens = train_length / 4 + rand() % (train_length / 2 - train_length / 4);
 
-    // Ã¹ ¹øÂ° ½Ã¹ÎÀº ¿­Â÷ÀÇ ¿À¸¥ÂÊ ³¡¿¡ ¹èÄ¡
+    // ì²« ë²ˆì§¸ ì‹œë¯¼ì€ ì—´ì°¨ì˜ ì˜¤ë¥¸ìª½ ëì— ë°°ì¹˜
     citizens[0] = train_length - 6;
     aggros[0] = 1;
 
-    // ³ª¸ÓÁö ½Ã¹ÎµéÀº ¹«ÀÛÀ§·Î ¹èÄ¡
+    // ë‚˜ë¨¸ì§€ ì‹œë¯¼ë“¤ì€ ë¬´ì‘ìœ„ë¡œ ë°°ì¹˜
     for (int i = 1; i < num_citizens; ++i) {
         int position=1;
-        // ÀÌ¹Ì ½Ã¹ÎÀÌ ÀÖ´Â À§Ä¡¿¡´Â ¹èÄ¡ÇÏÁö ¾Êµµ·Ï ÇÏ±â À§ÇØ while ·çÇÁ »ç¿ë
+        // ì´ë¯¸ ì‹œë¯¼ì´ ìˆëŠ” ìœ„ì¹˜ì—ëŠ” ë°°ì¹˜í•˜ì§€ ì•Šë„ë¡ í•˜ê¸° ìœ„í•´ while ë£¨í”„ ì‚¬ìš©
         if (rand() % 100 < 50)
             position += 1;
         citizens[i] = citizens[i - 1] - position;
@@ -769,17 +769,17 @@ int init_citizens(int train_length, int citizens[50], int aggros[50]) {
     return num_citizens;
 }
 
-//¹è¿­ º¹»ç ÇÔ¼ö
+//ë°°ì—´ ë³µì‚¬ í•¨ìˆ˜
 void backup_array(int n, int old[], int cur[]) {
 	for (int i = 0; i < n; ++i) {
 		old[i] = cur[i];
 	}
 }
 
-//½Ã¹Î ÀÌµ¿ ÇÔ¼ö
+//ì‹œë¯¼ ì´ë™ í•¨ìˆ˜
 void move_citizens(int prob, int num_citizens, int citizens[50], int ct_aggros[50])
 {
-    // ½Ã¹ÎÀº °Å²Ù·Î ÀúÀåµÇ¾î ÀÖÀ½
+    // ì‹œë¯¼ì€ ê±°ê¾¸ë¡œ ì €ì¥ë˜ì–´ ìˆìŒ
     for (int i = num_citizens - 1; i >= 0; i--) {
         int cp = citizens[i];
         if (rand() % 100 >= prob && (i == num_citizens-1 || cp - 1 != citizens[i + 1])) {
@@ -794,7 +794,7 @@ void move_citizens(int prob, int num_citizens, int citizens[50], int ct_aggros[5
     }
 }
 
-//½Ã¹Î¼ö °è»ê ÇÔ¼ö
+//ì‹œë¯¼ìˆ˜ ê³„ì‚° í•¨ìˆ˜
 int check_citizens(int num_citizens, int citizens[50], int ct_aggros[50])
 {
     int n = num_citizens;
@@ -806,9 +806,9 @@ int check_citizens(int num_citizens, int citizens[50], int ct_aggros[50])
     return n;
 }
 
-//½ºÅ×ÀÌÁö3 ½Ã¹Î »óÅÂ Ãâ·Â ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€3 ì‹œë¯¼ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
 void print_citizen3(int no, int ocp, int cp, int oaggro, int aggro) {
-    // ½Ã¹Î »óÅÂ Ãâ·Â
+    // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
     printf("citizen%d : ", no);
     if (ocp == cp) {
         printf("stay %d ", cp);
@@ -825,7 +825,7 @@ void print_citizen3(int no, int ocp, int cp, int oaggro, int aggro) {
     printf(")\n");
 }
 
-//½ºÅ×ÀÌÁö3 , ½ºÅ×ÀÌÁö4 ¿¡¼­ »ç¿ëÇÏ´Â ½Ã¹Î ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€3 , ìŠ¤í…Œì´ì§€4 ì—ì„œ ì‚¬ìš©í•˜ëŠ” ì‹œë¯¼ í•¨ìˆ˜
 void print_citizens(int num_citizens, int ct_oldpos[50], int citizens[50], int oct_aggros[50], int ct_aggros[50])
 {
     for (int i = 0; i < num_citizens; ++i) {
@@ -833,7 +833,7 @@ void print_citizens(int num_citizens, int ct_oldpos[50], int citizens[50], int o
     }
 }
 
-//½ºÅ×ÀÌÁö3 °ÔÀÓ Á¾·á È®ÀÎ ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€3 ê²Œì„ ì¢…ë£Œ í™•ì¸ í•¨ìˆ˜
 int check_gameover3(int num_citizens, int citizens[50], int ct_aggros[50], int zp)
 {
     int cp = citizens[0];
@@ -851,32 +851,32 @@ int check_gameover3(int num_citizens, int citizens[50], int ct_aggros[50], int z
         }
         citizens[num_citizens - 1] = 0;
         ct_aggros[num_citizens - 1] = 0;
-        // i == 0ÀÌ¸é ¸ğµç ½Ã¹ÎµéÀÌ Á×À½
+        // i == 0ì´ë©´ ëª¨ë“  ì‹œë¯¼ë“¤ì´ ì£½ìŒ
         return (num_citizens == 1 ? FALSE : -1);
     }
     return -1;
 }
 
-//½ºÅ×ÀÌÁö3 ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€3 í•¨ìˆ˜
 int stage_3(int train_length, int probability, int ma_stamina) {
-    // ½Ã¹Î, Á»ºñ, ¸¶µ¿¼®ÀÇ À§Ä¡¸¦ ÀúÀåÇÏ´Â ¹è¿­°ú ½Ã¹ÎÀÇ ¼ö º¯¼ö ¼±¾ğ
-    int citizens[50] = { 0 }; // ÃÖ´ë ¿­Â÷ ±æÀÌ´Â 50ÀÌ¹Ç·Î
+    // ì‹œë¯¼, ì¢€ë¹„, ë§ˆë™ì„ì˜ ìœ„ì¹˜ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´ê³¼ ì‹œë¯¼ì˜ ìˆ˜ ë³€ìˆ˜ ì„ ì–¸
+    int citizens[50] = { 0 }; // ìµœëŒ€ ì—´ì°¨ ê¸¸ì´ëŠ” 50ì´ë¯€ë¡œ
     int num_citizens;
     int zp, mp, omp , ozp;
-    int zt = 0; // Á»ºñ ÀÌµ¿ ÇÃ·¡±×: 0Àº ÀÌµ¿, 1Àº ¸ØÃã
-    int ma_aggro = 1; // ¸¶µ¿¼® ¾î±×·Î
-    int old_ma_aggro; // ¾î±×·Î º¯µ¿ Ãâ·ÂÀ» À§ÇØ ÀÌÀü °ª ÀúÀå
+    int zt = 0; // ì¢€ë¹„ ì´ë™ í”Œë˜ê·¸: 0ì€ ì´ë™, 1ì€ ë©ˆì¶¤
+    int ma_aggro = 1; // ë§ˆë™ì„ ì–´ê·¸ë¡œ
+    int old_ma_aggro; // ì–´ê·¸ë¡œ ë³€ë™ ì¶œë ¥ì„ ìœ„í•´ ì´ì „ ê°’ ì €ì¥
     int ct_oldpos[50], ct_aggros[50], oct_aggros[50];
 
-    // Á»ºñ¿Í ¸¶µ¿¼® ÃÊ±â À§Ä¡ ¼³Á¤
+    // ì¢€ë¹„ì™€ ë§ˆë™ì„ ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
     zp = train_length - 3;
     mp = train_length - 2;
 
-    // ¿­Â÷ ±æÀÌ¿¡ µû¶ó ½Ã¹Î ¼ö ¼³Á¤
+    // ì—´ì°¨ ê¸¸ì´ì— ë”°ë¼ ì‹œë¯¼ ìˆ˜ ì„¤ì •
     num_citizens = init_citizens(train_length, citizens, ct_aggros);
 
     intro3();
-    // ¿­Â÷ »óÅÂ Ãâ·Â
+    // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
     print_train3(train_length, num_citizens, citizens, zp, mp);
 
     while (1) {
@@ -885,13 +885,13 @@ int stage_3(int train_length, int probability, int ma_stamina) {
         backup_array(num_citizens, ct_oldpos, citizens);
         backup_array(num_citizens, oct_aggros, ct_aggros);
 
-        // ½Ã¹Î ÀÌµ¿
+        // ì‹œë¯¼ ì´ë™
         move_citizens(100-probability, num_citizens, citizens, ct_aggros);
 
-        // Å»ÃâÇÑ ½Ã¹Î ¾÷µ¥ÀÌÆ®
+        // íƒˆì¶œí•œ ì‹œë¯¼ ì—…ë°ì´íŠ¸
         num_citizens = check_citizens(num_citizens, citizens, ct_aggros);
 
-        // Á»ºñ ÀÌµ¿
+        // ì¢€ë¹„ ì´ë™
         if (zt == 0) {
             zp = move_zombie(probability, zp);
             zt = 1;
@@ -900,14 +900,14 @@ int stage_3(int train_length, int probability, int ma_stamina) {
             zt = 0;
         }
 
-        // ¿­Â÷ »óÅÂ Ãâ·Â
+        // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
         print_train3(train_length, num_citizens, citizens, zp, mp);
-        // ½Ã¹Î »óÅÂ Ãâ·Â
+        // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
         print_citizens(num_citizens, ct_oldpos, citizens, oct_aggros, ct_aggros);
-        // Á»ºñ »óÅÂ Ãâ·Â
+        // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
         print_zombie(zt, ozp, zp);
 
-        // °ÔÀÓ Á¾·á °Ë»ç
+        // ê²Œì„ ì¢…ë£Œ ê²€ì‚¬
         int game_over = check_gameover3(num_citizens, citizens, ct_aggros, zp);
         if (game_over >= 0)
             return game_over;
@@ -916,25 +916,25 @@ int stage_3(int train_length, int probability, int ma_stamina) {
             printf("%d citizen(s) alive(s).\n", num_citizens);
         }
 
-        // ¸¶µ¿¼® ÀÌµ¿
+        // ë§ˆë™ì„ ì´ë™
         int move = get_dongseok_move(mp, zp);
         mp = move_dongseok(move, mp);
         ma_aggro = update_aggro(old_ma_aggro = ma_aggro, omp, mp);
         print_train3(train_length, num_citizens, citizens, zp, mp);
         print_dongseok(omp, mp, old_ma_aggro, ma_aggro, ma_stamina);
 
-        // Çàµ¿ ÆäÀÌÁî
-        // Á»ºñÀÇ Çàµ¿ Ã³¸®
+        // í–‰ë™ í˜ì´ì¦ˆ
+        // ì¢€ë¹„ì˜ í–‰ë™ ì²˜ë¦¬
         int z_action = zombie_action(citizens[0], mp, ct_aggros[0], ma_aggro, zp);
 
-        // Á»ºñÀÇ °ø°İ ´ë»ó Ãâ·Â
+        // ì¢€ë¹„ì˜ ê³µê²© ëŒ€ìƒ ì¶œë ¥
         printf("Citizen does nothing.\n");
         if (z_action == ATK_CITIZEN) {
             printf("GAME OVER! citizen dead..\n");
             return FALSE;
         }
         else if (z_action == ATK_DONGSEOK) {
-            // ½Ã¹Î ¾î±×·Î´Â ¸¶Áö¸· ½Ã¹ÎÀÇ ¾î±×·Î¸¦ ÀÇ¹Ì
+            // ì‹œë¯¼ ì–´ê·¸ë¡œëŠ” ë§ˆì§€ë§‰ ì‹œë¯¼ì˜ ì–´ê·¸ë¡œë¥¼ ì˜ë¯¸
             printf("Zombie attacked madongseok (aggro: %d vs. %d, madongseok stamina: %d -> %d)\n",
                 ct_aggros[0], ma_aggro, ma_stamina, ma_stamina - 1);
             if (--ma_stamina < STM_MIN) {
@@ -947,23 +947,23 @@ int stage_3(int train_length, int probability, int ma_stamina) {
             printf("Zombie attacked nobody.\n");
         }
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ÀÔ·Â ¹Ş±â
+        // ë§ˆë™ì„ì˜ í–‰ë™ ì…ë ¥ ë°›ê¸°
         int action = get_dongseok_action(mp, zp);
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ¼öÇà
+        // ë§ˆë™ì„ì˜ í–‰ë™ ìˆ˜í–‰
         int ma_status[2] = { ma_aggro, ma_stamina };
         int zombie_hold = dongseok_action(100-probability, mp, action, ma_status);
 
-        // ¹è¿­À» ÀÌ¿ëÇÏ¿© º¯°æµÈ °ªÀ» º¹¿ø
+        // ë°°ì—´ì„ ì´ìš©í•˜ì—¬ ë³€ê²½ëœ ê°’ì„ ë³µì›
         ma_aggro = ma_status[0];
         ma_stamina = ma_status[1];
     }
 }
 
-//½ºÅ×ÀÌÁö4 Á»ºñ Ãâ·Â ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 ì¢€ë¹„ ì¶œë ¥ í•¨ìˆ˜
 void print_zombie4(int i, int ozp, int zp)
 {
-    // Á»ºñ »óÅÂ Ãâ·Â
+    // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
     printf("Reinforced zombie%d  : ",i);
     if (ozp == zp)
         printf("stay %d\n", zp);
@@ -972,14 +972,14 @@ void print_zombie4(int i, int ozp, int zp)
 
 }
 
-//½ºÅ×ÀÌÁö4 °­È­ Á»ºñ ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 ê°•í™” ì¢€ë¹„ í•¨ìˆ˜
 void print_zombies(int num_zombies, int old_zombies[50], int zombies[50])
 {
     for(int i = 0; i < num_zombies; i++)
         print_zombie4(i, old_zombies[i], zombies[i]);
 }
 
-//½ºÅ×ÀÌÁö4 °­È­ Á»ºñ Çàµ¿ ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 ê°•í™” ì¢€ë¹„ í–‰ë™ í•¨ìˆ˜
 void move_zombies(int prob, int num_zombies, int zombies[50])
 {
     for (int i = num_zombies - 1; i >= 0; i--) {
@@ -990,16 +990,16 @@ void move_zombies(int prob, int num_zombies, int zombies[50])
     }
 }
 
-//½ºÅ×ÀÌÁö4 Á¾·á È®ÀÎ ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 ì¢…ë£Œ í™•ì¸ í•¨ìˆ˜
 int check_gameover4(int num_citizens, int citizens[50], int ct_aggros[50], int num_zombies, int zombies[50], int zp)
 {
-    // Ç×»ó Ã¹¹øÂ° Á»ºñ (°­È­ Á»ºñ°¡ ÀÖ´Â °æ¿ì, °­È­Á»ºñÀÇ ¸¶Áö¸· ÀÎµ¦½º)´Â
-    // ¸¶Áö¸· ½Ã¹Î (Ã¹¹øÂ° ÀÎµ¦½º)¸¸ °ø°İÇÔ
+    // í•­ìƒ ì²«ë²ˆì§¸ ì¢€ë¹„ (ê°•í™” ì¢€ë¹„ê°€ ìˆëŠ” ê²½ìš°, ê°•í™”ì¢€ë¹„ì˜ ë§ˆì§€ë§‰ ì¸ë±ìŠ¤)ëŠ”
+    // ë§ˆì§€ë§‰ ì‹œë¯¼ (ì²«ë²ˆì§¸ ì¸ë±ìŠ¤)ë§Œ ê³µê²©í•¨
     int nz = num_zombies;
     if (nz > 0)
         zp = zombies[nz - 1];
 
-    int cp = citizens[0]; // ¸¶Áö¸· ½Ã¹Î
+    int cp = citizens[0]; // ë§ˆì§€ë§‰ ì‹œë¯¼
     if (cp == 1) {
         printf("\nSUCCESS! YOU WIN\n");
         printf("Citizen(s) escaped to the next train\n");
@@ -1016,35 +1016,35 @@ int check_gameover4(int num_citizens, int citizens[50], int ct_aggros[50], int n
         }
         citizens[num_citizens - 1] = 0;
         ct_aggros[num_citizens - 1] = 0;
-        // i == 0ÀÌ¸é ¸ğµç ½Ã¹ÎµéÀÌ Á×À½
+        // i == 0ì´ë©´ ëª¨ë“  ì‹œë¯¼ë“¤ì´ ì£½ìŒ
         return (num_citizens == 1 ? FALSE : -1);
     }
     return -1;
 }
 
-//½ºÅ×ÀÌÁö4 ÇÔ¼ö
+//ìŠ¤í…Œì´ì§€4 í•¨ìˆ˜
 int stage_4(int train_length, int probability, int ma_stamina) {
-    // ½Ã¹Î, Á»ºñ, ¸¶µ¿¼®ÀÇ À§Ä¡¸¦ ÀúÀåÇÏ´Â ¹è¿­°ú ½Ã¹ÎÀÇ ¼ö º¯¼ö ¼±¾ğ
-    int citizens[50] = { 0 }; // ÃÖ´ë ¿­Â÷ ±æÀÌ´Â 50ÀÌ¹Ç·Î
+    // ì‹œë¯¼, ì¢€ë¹„, ë§ˆë™ì„ì˜ ìœ„ì¹˜ë¥¼ ì €ì¥í•˜ëŠ” ë°°ì—´ê³¼ ì‹œë¯¼ì˜ ìˆ˜ ë³€ìˆ˜ ì„ ì–¸
+    int citizens[50] = { 0 }; // ìµœëŒ€ ì—´ì°¨ ê¸¸ì´ëŠ” 50ì´ë¯€ë¡œ
     int num_citizens;
-    int zombies[50] = { 0 };    // °­È­Á»ºñ
+    int zombies[50] = { 0 };    // ê°•í™”ì¢€ë¹„
     int num_zombies = 0;
     int zp, mp, omp, ozp;
-    int zt = 0; // Á»ºñ ÀÌµ¿ ÇÃ·¡±×: 0Àº ÀÌµ¿, 1Àº ¸ØÃã
-    int ma_aggro = 1; // ¸¶µ¿¼® ¾î±×·Î
-    int old_ma_aggro; // ¾î±×·Î º¯µ¿ Ãâ·ÂÀ» À§ÇØ ÀÌÀü °ª ÀúÀå
+    int zt = 0; // ì¢€ë¹„ ì´ë™ í”Œë˜ê·¸: 0ì€ ì´ë™, 1ì€ ë©ˆì¶¤
+    int ma_aggro = 1; // ë§ˆë™ì„ ì–´ê·¸ë¡œ
+    int old_ma_aggro; // ì–´ê·¸ë¡œ ë³€ë™ ì¶œë ¥ì„ ìœ„í•´ ì´ì „ ê°’ ì €ì¥
     int ct_oldpos[50], ct_aggros[50], oct_aggros[50];
     int old_zombies[50];
 
-    // Á»ºñ¿Í ¸¶µ¿¼® ÃÊ±â À§Ä¡ ¼³Á¤
+    // ì¢€ë¹„ì™€ ë§ˆë™ì„ ì´ˆê¸° ìœ„ì¹˜ ì„¤ì •
     zp = train_length - 3;
     mp = train_length - 2;
 
-    // ¿­Â÷ ±æÀÌ¿¡ µû¶ó ½Ã¹Î ¼ö ¼³Á¤
+    // ì—´ì°¨ ê¸¸ì´ì— ë”°ë¼ ì‹œë¯¼ ìˆ˜ ì„¤ì •
     num_citizens = init_citizens(train_length, citizens, ct_aggros);
 
     intro4();
-    // ¿­Â÷ »óÅÂ Ãâ·Â
+    // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
     print_train4(train_length, num_citizens, citizens, num_zombies, zombies, zp, mp);
 
     while (1) {
@@ -1054,20 +1054,20 @@ int stage_4(int train_length, int probability, int ma_stamina) {
         backup_array(num_citizens, oct_aggros, ct_aggros);
         backup_array(num_zombies, old_zombies, zombies);
 
-        // ½Ã¹Î ÀÌµ¿
+        // ì‹œë¯¼ ì´ë™
         move_citizens(100 - probability, num_citizens, citizens, ct_aggros);
 
-        // Å»ÃâÇÑ ½Ã¹Î ¾÷µ¥ÀÌÆ®
+        // íƒˆì¶œí•œ ì‹œë¯¼ ì—…ë°ì´íŠ¸
         num_citizens = check_citizens(num_citizens, citizens, ct_aggros);
 
-        // °­È­ Á»ºñ ÀÌµ¿
+        // ê°•í™” ì¢€ë¹„ ì´ë™
         move_zombies(probability, num_zombies, zombies);
 
-        // Á»ºñ ÀÌµ¿
+        // ì¢€ë¹„ ì´ë™
         if (zt == 0) {
             zp = move_zombie(probability, zp);
             if (num_zombies > 0 && zombies[num_zombies - 1] == zp) 
-                // °­È­Á»ºñÀÇ À§Ä¡¿Í Á»ºñÀÇ À§Ä¡°¡ °°À¸¸é ¿ø·¡ ÀÚ¸®·Î º¹±Í
+                // ê°•í™”ì¢€ë¹„ì˜ ìœ„ì¹˜ì™€ ì¢€ë¹„ì˜ ìœ„ì¹˜ê°€ ê°™ìœ¼ë©´ ì›ë˜ ìë¦¬ë¡œ ë³µê·€
                 zp = ozp;
             zt = 1;
         }
@@ -1075,15 +1075,15 @@ int stage_4(int train_length, int probability, int ma_stamina) {
             zt = 0;
         }
 
-        // ¿­Â÷ »óÅÂ Ãâ·Â
+        // ì—´ì°¨ ìƒíƒœ ì¶œë ¥
         print_train4(train_length, num_citizens, citizens, num_zombies, zombies, zp, mp);
-        // ½Ã¹Î »óÅÂ Ãâ·Â
+        // ì‹œë¯¼ ìƒíƒœ ì¶œë ¥
         print_citizens(num_citizens, ct_oldpos, citizens, oct_aggros, ct_aggros);
-        // Á»ºñ »óÅÂ Ãâ·Â
+        // ì¢€ë¹„ ìƒíƒœ ì¶œë ¥
         print_zombies(num_zombies, old_zombies, zombies);
         print_zombie(zt, ozp, zp);
 
-        // °ÔÀÓ Á¾·á °Ë»ç
+        // ê²Œì„ ì¢…ë£Œ ê²€ì‚¬
         int game_over = check_gameover4(num_citizens, citizens, ct_aggros, num_zombies, zombies, zp);
         if (game_over >= 0)
             return game_over;
@@ -1095,25 +1095,25 @@ int stage_4(int train_length, int probability, int ma_stamina) {
             }
         }
 
-        // ¸¶µ¿¼® ÀÌµ¿
+        // ë§ˆë™ì„ ì´ë™
         int move = get_dongseok_move(mp, zp);
         mp = move_dongseok(move, mp);
         ma_aggro = update_aggro(old_ma_aggro = ma_aggro, omp, mp);
         print_train4(train_length, num_citizens, citizens, num_zombies, zombies, zp, mp);
         print_dongseok(omp, mp, old_ma_aggro, ma_aggro, ma_stamina);
 
-        // Çàµ¿ ÆäÀÌÁî
-        // Á»ºñÀÇ Çàµ¿ Ã³¸®
+        // í–‰ë™ í˜ì´ì¦ˆ
+        // ì¢€ë¹„ì˜ í–‰ë™ ì²˜ë¦¬
         int z_action = zombie_action(citizens[0], mp, ct_aggros[0], ma_aggro, zp);
 
-        // Á»ºñÀÇ °ø°İ ´ë»ó Ãâ·Â
+        // ì¢€ë¹„ì˜ ê³µê²© ëŒ€ìƒ ì¶œë ¥
         printf("Citizen does nothing.\n");
         if (z_action == ATK_CITIZEN) {
             printf("GAME OVER! citizen dead..\n");
             return FALSE;
         }
         else if (z_action == ATK_DONGSEOK) {
-            // ½Ã¹Î ¾î±×·Î´Â ¸¶Áö¸· ½Ã¹ÎÀÇ ¾î±×·Î¸¦ ÀÇ¹Ì
+            // ì‹œë¯¼ ì–´ê·¸ë¡œëŠ” ë§ˆì§€ë§‰ ì‹œë¯¼ì˜ ì–´ê·¸ë¡œë¥¼ ì˜ë¯¸
             printf("Zombie attacked madongseok (aggro: %d vs. %d, madongseok stamina: %d -> %d)\n",
                 ct_aggros[0], ma_aggro, ma_stamina, ma_stamina - 1);
             if (--ma_stamina < STM_MIN) {
@@ -1126,34 +1126,34 @@ int stage_4(int train_length, int probability, int ma_stamina) {
             printf("Zombie attacked nobody.\n");
         }
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ÀÔ·Â ¹Ş±â
+        // ë§ˆë™ì„ì˜ í–‰ë™ ì…ë ¥ ë°›ê¸°
         int action = get_dongseok_action(mp, zp);
 
-        // ¸¶µ¿¼®ÀÇ Çàµ¿ ¼öÇà
+        // ë§ˆë™ì„ì˜ í–‰ë™ ìˆ˜í–‰
         int ma_status[2] = { ma_aggro, ma_stamina };
         int zombie_hold = dongseok_action(100-probability, mp, action, ma_status);
 
-        // ¹è¿­À» ÀÌ¿ëÇÏ¿© º¯°æµÈ °ªÀ» º¹¿ø
+        // ë°°ì—´ì„ ì´ìš©í•˜ì—¬ ë³€ê²½ëœ ê°’ì„ ë³µì›
         ma_aggro = ma_status[0];
         ma_stamina = ma_status[1];
     }
 }
 
-// ¸ŞÀÎÇÔ¼ö
+// ë©”ì¸í•¨ìˆ˜
 int main(void) {
-    // ½Ã¹Î, Á»ºñ, ¿­Â÷ÀÇ ±æÀÌ ¹× È®·ü º¯¼ö ¼±¾ğ
+    // ì‹œë¯¼, ì¢€ë¹„, ì—´ì°¨ì˜ ê¸¸ì´ ë° í™•ë¥  ë³€ìˆ˜ ì„ ì–¸
     int train_length;
     int probability;
-    int ma_stamina; // ¸¶µ¿¼® Ã¼·Â
+    int ma_stamina; // ë§ˆë™ì„ ì²´ë ¥
 
-    intro();            // ÀÎÆ®·Î È­¸é Ãâ·Â
-    srand(time(NULL));  // ³­¼ö ½Ãµå ¼³Á¤
+    intro();            // ì¸íŠ¸ë¡œ í™”ë©´ ì¶œë ¥
+    srand(time(NULL));  // ë‚œìˆ˜ ì‹œë“œ ì„¤ì •
 
-    // ¿­Â÷ÀÇ ±æÀÌ ÀÔ·Â ¹Ş±â
+    // ì—´ì°¨ì˜ ê¸¸ì´ ì…ë ¥ ë°›ê¸°
     train_length = get_value("train length ", LEN_MIN, LEN_MAX);
-    // ¸¶µ¿¼® ½ºÅÂ¹Ì³ª
+    // ë§ˆë™ì„ ìŠ¤íƒœë¯¸ë‚˜
     ma_stamina = get_value("madongseok stamina ", STM_MIN, STM_MAX);
-    // È®·ü ÀÔ·Â ¹Ş±â
+    // í™•ë¥  ì…ë ¥ ë°›ê¸°
     probability = get_value("percentile probability 'p' ", PROB_MIN, PROB_MAX);
 
     if (stage_1(train_length, probability, ma_stamina) && stage_2(train_length, probability, ma_stamina) &&
